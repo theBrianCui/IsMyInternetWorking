@@ -1,0 +1,451 @@
+<?php session_start(); ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Is My Internet Working?</title>
+<meta name="description" content="Yes, it is! A handy utility and reference that offers a wealth of free tips on speeding up, troubleshooting, and repairing your Internet connection." />
+<!-- Facebook meta tags -->
+<meta property="og:title" content="Is My Internet Working?"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://www.ismyinternetworking.com"/>
+<meta property="og:image" content="http://www.ismyinternetworking.com/image.png"/>
+<meta property="og:description" content="Yes, it is! A handy reference that offers a wealth of free tips on speeding up, troubleshooting, and repairing your Internet connection."/>
+<!-- Twitter meta tags -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Is My Internet Working?">
+<meta name="twitter:description" content="Yes, it is! A handy reference that offers a wealth of free tips on speeding up, troubleshooting, and repairing your Internet connection.">
+<meta name="twitter:image" content="http://www.ismyinternetworking.com/image.png">
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=9" /> -->
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+function $(id) {
+    return document.getElementById(id);
+}
+var isChecking = false;
+var checksFailed = 0;
+var failureMessages = ["", "Double checking...", "Third time's the charm..."];
+var timeout = 2000;
+var locationLookup = false;
+var imgArray = [];
+
+//Credits go to Chuck Callebs at Stack Overflow for (finding) this function
+//http://stackoverflow.com/questions/4282151/is-it-possible-to-ping-a-server-from-javascript
+function Pinger_ping(ip) {
+	imgArray.push({});
+    var index = imgArray.length - 1;
+
+    if (!isChecking) {
+        //checking
+        //alert('Checking...');
+        setToMaybe();
+        //alert('Maybe set...');
+        isChecking = true;
+        imgArray[index].inUse = true;
+        imgArray[index].ip = ip;
+
+        imgArray[index].img = new Image();
+        var _that = imgArray[index];
+        _that.inUse = true;
+
+        imgArray[index].timer = setTimeout(function() {
+            if (_that.inUse && isChecking) {
+                _that.inUse = false;
+                //failure
+                console.log("Image loading timed out!");
+                setToNo();
+            }
+        }, timeout);
+
+        imgArray[index].start = new Date().getTime();
+        imgArray[index].img.src = "https://" + ip + "/blank.gif?cachebreaker=" + new Date().getTime();
+
+        imgArray[index].img.onload = function() {
+            if (_that.inUse) {
+                _that.inUse = false;
+                var loadTime = Math.abs(new Date() - imgArray[index].start);
+
+                if (loadTime < timeout) {
+                    var height = imgArray[index].img.height;
+                    var width = imgArray[index].img.width;
+                    //alert('Load time took:' + loadTime);
+
+                    console.log("Image loading took " + loadTime + " and is " + height + "px tall, " + width + "px wide");
+
+                    setStatus(loadTime);
+                }
+            }
+        };
+
+        imgArray[index].img.onerror = function() {
+            if (_that.inUse) {
+                _that.inUse = false;
+
+                //blank.gif should exist; this is a failure
+                console.log("Image loading error!");
+                setToNo();
+            }
+        };
+    }
+}
+
+function setStatus(loadTime) {
+    /*if (loadTime < 40) {
+        //alert('Loaded too fast to be true!');
+        setToNo();
+    } else {*/
+        checksFailed = 0;
+        $("yestime").innerHTML = "The mothership responded in " + loadTime + " ms.";
+        setToYes();
+    //}
+}
+
+function setToMaybe() {
+    isChecking = true;
+
+    $("yeslink").style.color = "#FF9000";
+    $("status").style.color = "#FF9000";
+    $("menutest--link").style.color = "#FF9000";
+
+    $("menutest--link").innerHTML = "MAYBE";
+    $("yeslink").innerHTML = "MAYBE";
+    $("yessub").innerHTML = "Just a moment, I'm checking...";
+    $("status").innerHTML = "currently being tested.";
+    $("status_description").innerHTML = "Hold on just a sec.";
+    $("yeslink").setAttribute("class", "");
+    $("rr").setAttribute("class", "easteregg");
+
+    $("yestime").innerHTML = "Calling the mothership...";
+}
+
+function setToYes() {
+
+    $("yeslink").style.color = "green";
+    $("status").style.color = "green";
+    $("menutest--link").style.color = "green";
+
+    $("menutest--link").innerHTML = "YES!";
+    $("yeslink").innerHTML = "YES!";
+    $("yessub").innerHTML = "Your Internet is Working!";
+    $("status").innerHTML = "is working!";
+
+    $("status_description").innerHTML = "Go out and explore the wonders of the web, or click here to test again!";
+    //alert("Confirmed connection!");
+
+    if (!locationLookup) {
+        locationLookup = true;
+
+        var ipString = $("currentIP").innerHTML;
+        var ip = ipString.substring(ipString.lastIndexOf(" ") + 1);
+        //alert("Looking up " + 'http://www.geoplugin.net/json.gp?ip=' + ip + '&jsoncallback=setLocation');
+
+        var script = document.createElement('script');
+        script.src = 'https://freegeoip.net/json/' + ip + '?callback=setLocation';
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+    setLinks();
+}
+
+function setLocation(data) {
+    //alert(data.geoplugin_city);
+    var locationDesc = "Your <b>approximate location</b> (based on IP): " + data.city + ", " + data.region_name + ' ' + data.zip_code + ", " + data.country_name;
+    $("location").innerHTML = locationDesc;
+    $("location").setAttribute("style", "");
+}
+
+function setToNo() {
+    if (checksFailed + 1 >= failureMessages.length) {
+
+        //alert("Both checks failed!");
+        checksFailed = 0;
+        $("yestime").innerHTML = "The mothership didn't respond :(";
+
+        $("yeslink").style.color = "#eb0000";
+        $("status").style.color = "#eb0000";
+        $("menutest--link").style.color = "#eb0000";
+
+        $("menutest--link").innerHTML = "NO!";
+        $("yeslink").innerHTML = "NO!";
+        $("yessub").innerHTML = "Something's Wrong!";
+        $("status").innerHTML = "isn't working!";
+
+        $("status_description").innerHTML = "Continue reading for more information on how to troubleshoot your connection, or click here to test again.";
+        setLinks();
+
+    } else {
+        checksFailed++;
+        $("yestime").innerHTML = failureMessages[checksFailed];
+        setTimeout(function() {
+            isChecking = false;
+            runTest();
+        }, 1000);
+    }
+}
+
+function setLinks() {
+    setTimeout(function() {
+        isChecking = false;
+        $("yeslink").setAttribute("class", "grow");
+        var linkA = $("status_description");
+        $("status_description").innerHTML = linkA.innerHTML.replace("click here to test again", "<a href=\"javascript:void(0)\" onclick=\"runTest()\" title=\"Test again!\">click here to test again</a>");
+        $("rr").setAttribute("class", "");
+    }, 500);
+}
+
+function runTest() {
+    Pinger_ping('www.ismyinternetworking.com');
+}
+
+</script>
+<meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0" />
+</head>
+<body>
+<div id="menubar">
+<div id="menubar--wrapper">
+
+<ul id="menubar--left" class="menubar--contents">
+<li id="menutest"><a id="menutest--link" href="javascript:void(0)" onclick="runTest()" title="Click here to test again!">MAYBE</a></li>
+</ul>
+
+<ul id="menubar--right" class="menubar--contents">
+<li><!-- FACEBOOK -->
+<a href="https://www.facebook.com/sharer/sharer.php?u=http://www.ismyinternetworking.com" class="sc-btn sc--tiny sc--facebook" target="_blank">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share
+  </span>
+</a>
+</li>
+<!-- GOOGLE PLUS -->
+<li>
+<a href="https://plus.google.com/share?url=http://www.ismyinternetworking.com" class="sc-btn sc--tiny sc--google-plus" target="_blank">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.471,2c0,0-6.28,0-8.373,0C 5.344,2, 1.811,4.844, 1.811,8.138c0,3.366, 2.559,6.083, 6.378,6.083 c 0.266,0, 0.524-0.005, 0.776-0.024c-0.248,0.475-0.425,1.009-0.425,1.564c0,0.936, 0.503,1.694, 1.14,2.313 c-0.481,0-0.945,0.014-1.452,0.014C 3.579,18.089,0,21.050,0,24.121c0,3.024, 3.923,4.916, 8.573,4.916 c 5.301,0, 8.228-3.008, 8.228-6.032c0-2.425-0.716-3.877-2.928-5.442c-0.757-0.536-2.204-1.839-2.204-2.604 c0-0.897, 0.256-1.34, 1.607-2.395c 1.385-1.082, 2.365-2.603, 2.365-4.372c0-2.106-0.938-4.159-2.699-4.837l 2.655,0 L 17.471,2z M 14.546,22.483c 0.066,0.28, 0.103,0.569, 0.103,0.863c0,2.444-1.575,4.353-6.093,4.353 c-3.214,0-5.535-2.034-5.535-4.478c0-2.395, 2.879-4.389, 6.093-4.354c 0.75,0.008, 1.449,0.129, 2.083,0.334 C 12.942,20.415, 14.193,21.101, 14.546,22.483z M 9.401,13.368c-2.157-0.065-4.207-2.413-4.58-5.246 c-0.372-2.833, 1.074-5.001, 3.231-4.937c 2.157,0.065, 4.207,2.338, 4.58,5.171 C 13.004,11.189, 11.557,13.433, 9.401,13.368zM 26,8L 26,2L 24,2L 24,8L 18,8L 18,10L 24,10L 24,16L 26,16L 26,10L 32,10L 32,8 z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share
+  </span>
+</a>
+</li>
+<!-- TWITTER -->
+<li>
+<a href="https://twitter.com/home?status=My%20%23internet%20works!%20Awesome!%20The%20most%20useful%20website%20ever%20made:%20ismyinternetworking.com" class="sc-btn sc--tiny sc--twitter" target="_blank">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 32,6.076c-1.177,0.522-2.443,0.875-3.771,1.034c 1.355-0.813, 2.396-2.099, 2.887-3.632 c-1.269,0.752-2.674,1.299-4.169,1.593c-1.198-1.276-2.904-2.073-4.792-2.073c-3.626,0-6.565,2.939-6.565,6.565 c0,0.515, 0.058,1.016, 0.17,1.496c-5.456-0.274-10.294-2.888-13.532-6.86c-0.565,0.97-0.889,2.097-0.889,3.301 c0,2.278, 1.159,4.287, 2.921,5.465c-1.076-0.034-2.088-0.329-2.974-0.821c-0.001,0.027-0.001,0.055-0.001,0.083 c0,3.181, 2.263,5.834, 5.266,6.438c-0.551,0.15-1.131,0.23-1.73,0.23c-0.423,0-0.834-0.041-1.235-0.118 c 0.836,2.608, 3.26,4.506, 6.133,4.559c-2.247,1.761-5.078,2.81-8.154,2.81c-0.53,0-1.052-0.031-1.566-0.092 c 2.905,1.863, 6.356,2.95, 10.064,2.95c 12.076,0, 18.679-10.004, 18.679-18.68c0-0.285-0.006-0.568-0.019-0.849 C 30.007,8.548, 31.12,7.392, 32,6.076z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Tweet
+  </span>
+</a>
+</li>
+</ul>
+<!-- Clear the float to apply the height of menubar elements to #menubar--wrapper height -->
+<div style="clear: both;"></div>
+</div>
+</div>
+<div id="center">
+<div id="yesbox">
+<div id="yestext">
+<a id="yeslink" href="javascript:void(0)" onclick="runTest()" title="Click here to test again!">
+<script type="text/javascript">document.write("MAYBE");</script>
+<noscript>MAYBE</noscript></a>
+</div>
+<div id="yessub">
+<script type="text/javascript">document.write("Just a moment, I'm checking...");</script>
+<noscript>I can't test without JavaScript!</noscript>
+</div>
+<div id="yestime">
+<noscript>Please turn on JavaScript.</noscript>
+</div>
+</div>
+<hr noshade>
+<p class="question">
+If you're reading this message...</p>
+<p class="answer">
+...that means your internet is <span id="status">
+<script type="text/javascript">document.write("currently being tested.");</script>
+<noscript>probably working.</noscript></span>
+<span id="status_description">
+<script type="text/javascript">document.write("Hold on just a sec.");</script>
+<noscript>You might be loading a cached copy, which is why JavaScript is necessary to confirm the status of your internet connection.</noscript>
+</span>
+<br><br>
+Here are some details regarding your connection that I've collected<a class="easteregg" href="happy.html">:</a>
+</p>
+<div class="list" id="infoList">
+<ul class="bodylist">
+<li id="currentIP">Your <b>IP Address</b>: 
+<?php
+$currentIP = $_SERVER['REMOTE_ADDR'];
+echo $currentIP; 
+?>
+</li>
+<li id="location" style="display: none;">[Location Data]</li>
+<?php
+if(isset($_SESSION['lastIP'])) {
+	?><li>Your last recorded IP Address: <?php echo ($_SESSION['lastIP'] . '</li>'); 
+}
+$_SESSION['lastIP'] = $currentIP;
+?>
+<li>Your <b>user agent</b> string: <script type="text/javascript">document.write(navigator.userAgent);</script></li>
+<li>The <b>port</b> used to contact the web server: <?php echo $_SERVER['REMOTE_PORT']; ?></li>
+</ul>
+</div>
+<p class="answer">
+<span id="status_paragraph">
+Are you stuck, or having other internet connection troubles? You're in the right place: <font color="red"><b>keep this page open,</b></font> as it will become a handy troubleshooting reference and utility in case nothing else loads or your internet is really dying. Open other sites in a new tab, window, or browser.
+The connection test on this website can be <a href="javascript:void(0)" onclick="runTest()" id="rr" class="easteregg" title="Test again!">re-run</a> 
+without refreshing the page!
+</span>
+</p>
+<p class="question">
+Why don't other sites load properly?</p>
+<p class="answer">
+Chances are, other sites will load too (try <a href="http://google.com" target="_blank">Google</a>, <a href="http://search.yahoo.com/" target="_blank">Yahoo Search</a>, or <a href="http://startpage.com/" target="_blank">StartPage</a>), just slower than this one due to their size, server load, and/or other factors. 
+This site, not counting the share buttons, is quite small - around 25 kb - and shouldn't take more than a few seconds to load, unless you're on an extremely slow connection. See the next section below for information on how you can speed it up.
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>The <a href="http://tools.pingdom.com/fpt/" target="_blank">Pingdom Website Speed Test</a> can be used to evaluate the performance of a specific website, and if the test can't load the page much faster than you can, then something is wrong on their end, not yours.</li>
+<li>A page powered by a <a href="https://en.wikipedia.org/wiki/Content_delivery_network" target="_blank">Content Delivery Network (CDN)</a> that is down may have all its <i>text</i> load, with all the images and styling missing. In that case, simply wait a few minutes, and everything should return to normal.</li>
+</ul>
+</div>
+<p class="answer">
+If you get a blank page with no indication of loading (and no <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank">status code like 301, 302, 404, etc.</a>), check to see if it's <a href="http://www.downforeveryoneorjustme.com/" target="_blank" title="Down For Everyone Or Just Me?">down for everyone, and not just you.</a> In the case that the site is up and "it's just you," try clearing your DNS, which may have gotten scrambled:
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>For <b>Windows</b> users: Open a command prompt window and use the command "<b>ipconfig /flushdns</b>".</li>
+<li>For <b>Mac OS X (Mountain) Lion</b> users: In a terminal window, use "<b>sudo killall -HUP mDNSResponder</b>".</li>
+<li>For <b>Mac OSX 10.6</b> and earlier, the command "<b>sudo dscacheutil -flushcache</b>" will do the trick.</li>
+<li>For <b>Linux</b> users, your DNS is likely managed by <b>nscd daemon</b>. Typically, restarting <b>nscd daemon</b> will clear your DNS - and unfortunately, there is no universal command that works on all distributions. You can try the commands "<b>/etc/rc.d/nscd restart</b>" or "<b>/etc/init.d/nscd restart</b>".</li>
+</ul>
+</div>
+<p class="answer">
+It may be your ISP who is having DNS problems if none of the above solutions work for you. Try (temporarily) <a href="http://208.69.38.205/" target="_blank">switching to OpenDNS</a> to see if you can now load pages that previously wouldn't, and if that link doesn't work, then it's likely not a DNS issue - continue reading. You should also test your connection quality at <a href="http://www.pingtest.net/" target="_blank">Pingtest.net</a>. Any amount of packet loss indicates a problem on your end, and not the web server you are trying to access.</p>
+</p>
+<p class="question">
+What can I do to make my connection faster?</p>
+<p class="answer">
+If you're using wireless, there are a number of actions you can do to improve your connection speed. 
+The simplest method is to physically relocate closer to the router/access point to improve your signal strength. Some areas, depending on your environment, will get better signal than others.
+Need to stay far away from your hotspot/router on a regular basis? Consider purchasing an <a href="http://www.amazon.com/gp/product/B0087NZ31S/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0087NZ31S&linkCode=as2&tag=imiw2-20&linkId=3H3L5WDXZQKCEWQV" target="_blank">802.11 N compatible router, or a Wi-Fi Range Extender.</a> Alternatively, you have a few options:
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>Pause or stop any active streams/downloads that could be hogging bandwidth.</li>
+<li>Make sure the hotspot you are connecting to is secured - refer to your router's manual on how to set up a password (preferably <b>WPA2</b>, not WEP). Unsecured networks can be accessed by just about anybody, clogging up available bandwidth.</li>
+<li>Restart your wireless adapter by turning it on and off, or unplugging it and plugging it back in.
+<li>Restart your router manually by unplugging it and plugging it back in after 30 seconds. Sometimes routers just need a fresh reboot to get things going again.</li>
+</ul>
+</div>
+<p class="answer">
+If none of the above options work for you, or if you are using a wired connection, try the following:
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>Update your wireless or ethernet port drivers. The latest versions are available on the manufacturer's website.</li>
+<li>Use a different adapter (and try different USB ports) or cable.</li>
+<li>Purchase more bandwidth from your ISP, at an increased cost.</li>
+<li>Check to see if you have not exceeded your data usage cap, if you have one. Some ISPs will still allow you to access the internet, with a severe speed reduction.</li>
+</ul>
+</div>
+<p class="answer">
+Wireless adapters are <a href="http://www.amazon.com/gp/product/B002SZEOLG/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B002SZEOLG&linkCode=as2&tag=netbonetwo-20&linkId=I4XIPIHTPSTLTKNP" target="_blank">fairly cheap,</a> 
+and can provide varying degrees of success <a href="http://www.amazon.com/gp/product/B003516BJU/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B003516BJU&linkCode=as2&tag=netbonetwo-20&linkId=GWJEP2AMQRE22F4B" target="_blank">depending on the model.</a> A simple rule of thumb is, the bigger the antenna, the better the reception.
+I suggest trying out different ones - including <a href="http://www.amazon.com/gp/product/B0079XWMEI/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B0079XWMEI&linkCode=as2&tag=netbonetwo-20&linkId=7UJROCFEKAFJGTCK" target="_blank">internal cards,</a> which don't rely on USB (avoiding any USB driver issues), and are more permanent - to determine which one works best.
+You can test your internet connection speed via <a href="http://www.speedtest.net/" target="_blank">Speedtest.net</a> or <a href="http://www.speakeasy.net/speedtest/" target="_blank">Speakeasy's Speed Test</a> (provided you can load them - try <a href="http://www.dslreports.com/mspeed" target="_blank">DSLReports' Mobile Speed Test</a> for a more lightweight speed test). 
+</p>
+<p class="question">
+What if nothing loads at all?</p>
+<p class="answer">
+Any one of the components that bridge your browser to the internet could be broken, so you'll may have to diagnose each one individually to determine what's causing connectivity issues. 
+For most (home) internet setups, the "internet bridge" looks something like this: <i>Web Browser <-> OS/Network Adapter <-> Router <-> Modem <-> ISP <-> the rest of the internet.</i> Listed below are some potential fixes that can be done without leaving your chair (make sure to attempted all the steps in the previous sections as well!).
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>Try a <a href="http://portableapps.com/apps/internet/google_chrome_portable" target="_blank">different web browser</a>, preferably one <a href="http://portableapps.com/apps/internet/firefox_portable" target="_blank">without addons/extensions.</a></li>
+<li>Connect to a different wireless hotspot, such as one created by your smartphone through tethering. Failure to connect to any other hotspot indicates an issue with the adapter.</li>
+<li>Windows only: Right-click on the connection icon in the taskbar tray and select "Troubleshoot Problems" to see if Windows can solve the issue for you.</li>
+<li>Restart your computer. This tends to fix a lot of problems!</li>
+</ul>
+</div>
+<p class="answer">
+If none of the previous fixes work, your connection problems are likely not a result of your computer. The actions below go over the other components that could be causing issues.
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>Examine the lights on your router or modem. Green = good, red = bad, and flashing indicates activity. The manual for your router or modem will have more information regarding what status the lights indicate.
+<li>Check to see if the cables that link your router, modem, and the wall are secure.</li>
+<li>Restart your router manually by unplugging it and plugging it back in after 30 seconds. Sometimes routers just need a fresh reboot to get things going again.</li>
+<li>Unplug your router, and restart your modem by unplugging it and plugging it back in after 30 seconds. Then, plug your router back in. Sometimes your modem needs a reboot too.</li>
+</ul>
+</div>
+<p class="question">
+How do I determine if my router is working?
+</p>
+<table><thead style="font-weight:bold"><tr><td style="text-align:left;background:#fc9a5b">Manufacturer/Source</td><td style="background:#ffd248">IP Address</td><td colspan="2" style="background:#8fd062">Username/Password</td><td colspan="2" style="background:#c6f4a6">Alt. Username/Password</td></tr></thead><tbody><tr><td style="text-align:left">2Wire Gateway (AT&T U-Verse)</td><td>192.168.1.254</td><td colspan="2">Located on router</td><td>(blank)</td><td>(blank)</td></tr><tr><td style="text-align:left">Arris (Comcast Xfinity)</td><td>192.168.0.1</td><td>admin</td><td>password</td><td>admin</td><td>1234</td></tr><tr><td style="text-align:left">Arris (Comcast Xfinity) alt.</td><td>10.0.0.1</td><td>comcast</td><td>(blank)</td><td>(blank)</td><td>(blank)</td></tr><tr><td style="text-align:left">ASUS</td><td>192.168.1.1</td><td>admin</td><td>admin</td><td>root</td><td>root</td></tr><tr><td style="text-align:left">Belkin</td><td>192.168.2.1</td><td>(blank)</td><td>(blank)</td><td>admin</td><td>admin</td></tr><tr><td style="text-align:left">D-Link</td><td>192.168.0.1</td><td>admin</td><td>admin OR (blank)</td><td>user</td><td>(blank)</td></tr><tr><td style="text-align:left">Linksys</td><td>192.168.1.1</td><td>admin</td><td>admin</td><td>(blank)</td><td>admin</td></tr><tr><td style="text-align:left">NETGEAR</td><td>192.168.0.1</td><td>admin</td><td>admin OR password</td><td colspan="2">Refer to manual</td></tr><tr><td style="text-align:left">Pace (AT&T U-Verse)</td><td>192.168.1.254</td><td colspan="2">Located on router</td><td>admin</td><td>admin</td></tr><tr><td style="text-align:left">Securifi</td><td>10.10.10.254</td><td colspan="2">PIN: 1234</td><td>admin</td><td>admin</td></tr><tr><td style="text-align:left">TP-Link</td><td>192.168.1.1</td><td>admin</td><td>admin</td><td>root</td><td>admin</td></tr><tr><td style="text-align:left">TRENDnet</td><td>192.168.1.1</td><td>admin</td><td>admin OR password</td><td>(blank)</td><td>(blank)</td></tr></tbody></table>
+<p class="answer">
+Try to access your router's control panel via your browser (192.168.*.*) on a wired connection. In the table above, you can find control panel IP addresses for common router manufacturers under the "IP Address" column. 
+Alternatively, you can find it in your router's manual, or for Windows users, by opening a command prompt window, and then using the command "ipconfig" - your router's IP will be on the right of "Default Gateway...". 
+Punch the IP address into the address bar of your browser, press enter, and the control panel page should appear within a few seconds.
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>When prompted for a username and password, try a combination of (blank), "root", and "admin". Default usernames and passwords for common router manufacturers can be found in the above reference table. The alternative username/password combination is used less often.
+<li>If you cannot find a username and password combination that works, you may need to reset your router to factory settings. See the next section for details.</li>
+<li>The control panel will never load if you've used the wrong IP address. Refer back to your router's manual if you get a loading icon for longer than ten seconds.</li>
+</ul>
+</div>
+<p class="answer">
+If the control panel says something similar to "Searching for Server" or "First-time Setup", then your ISP is having issues - <a href="http://gethuman.com/" target="_blank">give them a call.</a> 
+A support number can be located on your latest internet bill. 
+Otherwise, if the control panel page never loads (with no login prompt), and you're absolutely certain about the address, consider trying another router that works. This is rather time consuming, but also the most certain method of specifically determining whether or not your router has issues.
+<br><br>
+Online, or at your local electronics store, you can find <a href="http://www.amazon.com/gp/product/B001FWYGJS/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B001FWYGJS&linkCode=as2&tag=imiw2-20&linkId=AECBXXWZA4H6IBMY" target="_blank">relatively</a> <a href="http://www.amazon.com/gp/product/B008IFXQIW/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B008IFXQIW&linkCode=as2&tag=imiw2-20&linkId=3EBYX5SY3D3EB6DS" target="_blank">cheap</a> <a href="http://www.amazon.com/gp/product/B001UI4RTG/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B001UI4RTG&linkCode=as2&tag=imiw2-20&linkId=2L3OYIDTHCIBA6CS" target="_blank">options.</a> 
+Don't worry about features, speed, and range (as you should be using a wired connection at this point), it simply has to work. If that router fails to connect as well, the issue is likely due to your modem or ISP and your router(s) are perfectly fine. If the new one connects, your <a class="easteregg" href="old.html">old</a> (used) router is having problems, you can stick with your newly purchased one (or return it for a <a href="http://www.amazon.com/gp/product/B0087NZ31S/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B0087NZ31S&linkCode=as2&tag=imiw2-20&linkId=EXRT7M5EV3UWUBZG" target="_blank">higher-end router</a>). 
+<br><br>Alternatively, you can try to fix the older one with a hard reset - this will put your router back to factory settings, just like when you first took it out of the box.
+<font color="red"><b>Warning:</b></font> your old router settings will be unrecoverable after a reset! Attempt one more reboot before trying this, and make sure you are trying to access the control panel with the correct IP and through a wired connection! First, find the reset button on your router, which may be located underneath or in the back and will likely require a pin to push in. You have two options (taken from the <a href="http://www.dd-wrt.com/wiki/index.php/Reset_And_Reboot" target="_blank">DD-WRT Wiki</a>), have a stopwatch ready:
+</p>
+<div class="list">
+<ul class="bodylist">
+<li>"30 Reset" - Press and hold the reset button for 30 seconds while the router is fully booted and on.</li>
+<li>"30/30/30 Reset" - Press and hold the reset button for 30 seconds while the router is fully booted and on. Then, unplug the router while still holding down the reset button for 30 seconds. With the reset button still being held, plug the router back in for 30 seconds.</li>
+</ul>
+</div>
+<p class="answer">
+Performing a hard reset will require you to set up your router again. Refer to your router's manual for details.
+</p>
+<p class="question">
+What should I do if issues persist? (My internet only works sometimes)</p>
+<p class="answer">
+In an odd position where sometimes your internet works flawlessly, and then other times it's moving at a snail's pace? Driver and firmware updates often improve hardware stability, and the generic drivers provided by your OS may not be the best fit. 
+Go to the manufacturer's website, download, and install the latest drivers specific to your wireless/ethernet card. 
+<br><br>Updating the firmware on your router is trickier, more risky, and requires following specific instructions. You can obtain the latest version off the manufacturer's website and follow the provided documentation. Only update your router's firmware on a wired connection to reduce the risk of "bricking" your router.
+</p>
+<p class="question">I've tried everything above and I still don't have a stable connection!</p>
+<p class="answer">
+Consider switching to a better ISP. <a href="http://www.netindex.com/" target="_blank">Net Index</a> is a crowdsourced region/ISP statistics site that you can point to your area for ISP ratings. <a href="http://www.dslreports.com/reviews" target="_blank">DSLReports</a> also has ISP reviews that can be narrowed down to your region.
+</p>
+<hr noshade>
+<p class="copyright">&copy; Copyright 2011-2016 Is My Internet Working. Written and maintained by Brian Cui. Is My Internet Working is not to be held responsible for any incidental, consequential, or indirect damages from the information written on this website. We cannot guarantee that everything on here is perfectly safe. By following the guides on this site you assume total responsibility and risk of possible damages.</p>
+<p class="copyright">Location provided courtesy of <a href="http://ip-api.com/">IP-API.com</a>. No user location data acquired from these sources is ever stored by this website to respect your privacy.</p>
+<p class="copyright" style="font-size: 84%; text-align: center;"><b>v2.6.0 "Super Secure" | Last updated 10/1/2016.</b><br>Please forward fanmail, complaints, and cat videos to yourwebsiteworks [at] gmail /dot/ com.</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54086208-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript">
+runTest();
+</script>
+</div>
+</body>
+</html>
