@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/theBrianCui/IsMyInternetWorking/issues"
   },
-  "homepage": "https://github.com/theBrianCui/IsMyInternetWorking#readme"
+  "homepage": "https://github.com/theBrianCui/IsMyInternetWorking#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
