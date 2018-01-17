@@ -11,6 +11,11 @@ module.exports = [
     {
         name: "app",
         target: "web",
+        resolve: {
+            alias: {
+            "request$": "xhr"
+            },
+        },
         entry: path.join(PATHS.src, "app.js"),
         output: {
             path: path.join(PATHS.build, "public", "static"),
