@@ -10,13 +10,16 @@ export default () => {
             responseType: "text"
 
         }, (error, response, body) => {
-            if (!error && response.statusCode === 200)
+            if (!error && response.statusCode === 200) {
                 resolve(body);
+                return;
+            }
 
             console.error("Looks like there was a problem.");
             if (error) console.error(error);
             if (response.statusCode !== 200) console.error(`HTTP Response Code: ${response.statusCode}`);
             reject();
+            return;
         });
     });
 }

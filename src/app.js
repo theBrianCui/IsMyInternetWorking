@@ -3,7 +3,7 @@ import getMyIp from "./js/getMyIp.js";
 import ga from "./js/ga.js";
 
 getMyIp().then((result) => {
-    document.write(result);
+    console.log(result);
 }).catch((error) => {
-    document.write(error);
+    console.error(error);
 });

@@ -24,6 +24,7 @@ module.exports = [
         plugins: [
             new HtmlWebpackPlugin({
                 title: "Webpack demo",
+                template: path.join(PATHS.src, "page.html"),
                 filename: path.join(PATHS.build, "public", "index.html")
             }),
         ],
