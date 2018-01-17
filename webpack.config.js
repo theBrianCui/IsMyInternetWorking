@@ -17,6 +17,14 @@ module.exports = [
             },
         },
         entry: path.join(PATHS.src, "app.js"),
+        module: {
+            rules: [
+                {
+                    test: /\.s?css$/,
+                    use: ["style-loader", "css-loader", "sass-loader"]
+                }
+            ],
+        },
         output: {
             path: path.join(PATHS.build, "public", "static"),
             filename: "app.js",
