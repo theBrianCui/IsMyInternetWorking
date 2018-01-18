@@ -22,6 +22,10 @@ module.exports = [
                 {
                     test: /\.s?css$/,
                     use: ["style-loader", "css-loader", "sass-loader"]
+                },
+                {
+                    test: /\.hbs$/,
+                    use: "handlebars-loader",
                 }
             ],
         },
@@ -32,7 +36,7 @@ module.exports = [
         plugins: [
             new HtmlWebpackPlugin({
                 title: "Webpack demo",
-                template: path.join(PATHS.src, "page.html"),
+                template: path.join(PATHS.src, "hbs", "index.hbs"),
                 filename: path.join(PATHS.build, "public", "index.html")
             }),
         ],

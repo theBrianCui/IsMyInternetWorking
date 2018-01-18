@@ -24,6 +24,8 @@
   "devDependencies": {
     "bluebird": "^3.5.1",
     "css-loader": "^0.28.8",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",

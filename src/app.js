@@ -1,3 +1,4 @@
+import "./hbs/index.hbs";
 import "./css/style.scss";
 
 const Promise = require("bluebird");
