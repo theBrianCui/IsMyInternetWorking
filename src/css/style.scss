@@ -53,13 +53,12 @@ div {
   &#yesbox {
     text-align: center;
     font-family: $font_yes;
-    padding-top: 4em;
-    padding-bottom: 1.25em;
+    padding-top: 3.5em;
+    padding-bottom: 2.6em;
   }
   &#yestext {
-    line-height: 5.2em;
     a {
-      font-size: 700%;
+      font-size: 7em;
       color: #FF9000;
       font-weight: 700;
       text-decoration: none;
@@ -73,7 +72,7 @@ div {
   }
   &#yessub {
     font-size: 200%;
-    line-height: 1em;
+    line-height: .1em;
   }
   &#share {
     margin: 0 auto;
