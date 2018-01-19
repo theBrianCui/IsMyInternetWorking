@@ -52,11 +52,11 @@ div {
   }
   &#yesbox {
     text-align: center;
-    margin: -.8em 0 1.6em;
-    font-family: $font_yes
+    font-family: $font_yes;
+    padding-top: 4em;
+    padding-bottom: 1.25em;
   }
   &#yestext {
-    margin-top: 3.4em;
     line-height: 5.2em;
     a {
       font-size: 700%;
@@ -555,7 +555,6 @@ svg {
       font-size: 0.68em;
     }
     &#yesbox {
-      margin: (-0.8em) 0 1.1em;
     }
   }
   p.question {
