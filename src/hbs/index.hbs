@@ -45,29 +45,13 @@
         <div class="list" id="infoList">
             <ul class="bodylist">
                 <li id="currentIP">Your
-                    <b>IP Address</b>:
-                    <?php
-$currentIP = $_SERVER['REMOTE_ADDR'];
-echo $currentIP; 
-?>
+                    <b>IP Address</b>: [FILLMEIN]
                 </li>
                 <li id="location" style="display: none;">[Location Data]</li>
-                <?php
-if(isset($_SESSION['lastIP'])) {
-	?>
-                    <li>Your last recorded IP Address:
-                        <?php echo ($_SESSION['lastIP'] . '</li>'); 
-}
-$_SESSION['lastIP'] = $currentIP;
-?>
-                        <li>Your
-                            <b>user agent</b> string:
-                            <script type="text/javascript">document.write(navigator.userAgent);</script>
-                        </li>
-                        <li>The
-                            <b>port</b> used to contact the web server:
-                            <?php echo $_SERVER['REMOTE_PORT']; ?>
-                        </li>
+                <li>Your
+                    <b>user agent</b> string:
+                    <script type="text/javascript">document.write(navigator.userAgent);</script>
+                </li>
             </ul>
         </div>
         <p class="answer">
