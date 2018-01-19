@@ -1,4 +1,5 @@
 @import 'normalize';
+$font_yes: "Lucida Sans Unicode", "Lucida Sans", "Garuda", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
 
 body {
   margin-top: 0;
@@ -52,7 +53,7 @@ div {
   &#yesbox {
     text-align: center;
     margin: -.8em 0 1.6em;
-    font-family: "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+    font-family: $font_yes
   }
   &#yestext {
     margin-top: 3.4em;
@@ -171,7 +172,7 @@ tbody tr:nth-child(odd) {
         display: inline;
 
         &#menutest {
-          font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+          font-family: $font_yes;
           text-transform: uppercase;
           color: #FF9000;
           font-weight: 700;
@@ -192,8 +193,6 @@ tbody tr:nth-child(odd) {
     }
   }
 }
-
-
 
 p.copyright {
   font-size: 78%;
