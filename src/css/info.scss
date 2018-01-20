@@ -1,0 +1,37 @@
+.infobox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    font-family: $font_yes;
+    text-align: center;
+
+    .infobox-left {
+        flex-grow: 1;
+        border-right: $line_light_grey;
+        @include hr();
+        div {
+            min-width: $responsive_small / 2;
+        }
+    }
+
+    .infobox-right {
+        flex-grow: 2;
+        @include hr();
+        div {
+            min-width: $responsive_small / 2;
+        }
+    }
+
+    .infobox-ip {
+        order: 1;
+    }
+    .infobox-loc {
+        order: 2;
+    }
+    .infobox-ping {
+        order: 3;
+    }
+    .infobox-ua {
+        order: 4;
+    }
+}

@@ -24,45 +24,8 @@
                 <noscript>Please turn on JavaScript.</noscript>
             </div>
         </div>
-        <hr noshade>
-        <p class="question">
-            If you're reading this message...</p>
-        <p class="answer">
-            ...that means your internet is
-            <span id="status">
-                <script type="text/javascript">document.write("currently being tested.");</script>
-                <noscript>probably working.</noscript>
-            </span>
-            <span id="status_description">
-                <script type="text/javascript">document.write("Hold on just a sec.");</script>
-                <noscript>You might be loading a cached copy, which is why JavaScript is necessary to confirm the status of your internet
-                    connection.</noscript>
-            </span>
-            <br>
-            <br> Here are some details regarding your connection that I've collected
-            <a class="easteregg" href="happy.html">:</a>
-        </p>
-        <div class="list" id="infoList">
-            <ul class="bodylist">
-                <li id="currentIP">Your
-                    <b>IP Address</b>: [FILLMEIN]
-                </li>
-                <li id="location" style="display: none;">[Location Data]</li>
-                <li>Your
-                    <b>user agent</b> string:
-                    <script type="text/javascript">document.write(navigator.userAgent);</script>
-                </li>
-            </ul>
-        </div>
-        <p class="answer">
-            <span id="status_paragraph">
-                Are you stuck, or having other internet connection troubles? You're in the right place:
-                <font color="red">
-                    <b>keep this page open,</b>
-                </font> as it will become a handy troubleshooting reference and utility in case nothing else loads or your internet
-                is really dying. Open other sites in a new tab, window, or browser.
-            </span>
-        </p>
+        <div class="hr"></div>
+        {{> info}}
         <p class="question">
             Why don't other sites load properly?</p>
         <p class="answer">

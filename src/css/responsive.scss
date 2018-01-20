@@ -1,0 +1,47 @@
+@media (max-width: 561px) {
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-family: Helvetica,Arial,sans-serif;
+      font-size: 60%;
+      margin: 0 auto;
+    }
+    th, td {
+      padding: 1px 2px;
+      text-align: left;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 481px) {
+    .sc-text {
+      display: none;
+    }
+    div {
+      &#yestext {
+        font-size: 0.68em;
+      }
+      &#yesbox {
+      }
+    }
+    p.question {
+      font-size: 100%;
+    }
+    ul.bodylist {
+      text-align: left;
+      padding-left: 2.2em;
+    }
+  }
+  
+  @media screen and (min-width: 0\0) and (min-resolution: 72dpi) {
+    #menubar {
+      width: 100%;
+    }
+  }
+  
+  @media screen and (min-width: 0\0) and (min-resolution: 72dpi) and (max-width: 735px) {
+    #menubar {
+      width: auto;
+    }
+  }
