@@ -23,6 +23,18 @@ div#center {
   max-width: $body_col_width;
 }
 
+.green {
+  color: green;
+}
+
+.orange {
+  color: $color_orange;
+}
+
+.red {
+  color: $color_red;
+}
+
 p {
   &.question {
     font-weight: 700;
@@ -68,7 +80,6 @@ div {
   &#yestext {
     a {
       font-size: 7em;
-      color: #FF9000;
       font-weight: 700;
       text-decoration: none;
       outline: 0;
@@ -82,7 +93,6 @@ div {
 
 span#status {
   font-weight: 700;
-  color: #FF9000;
 }
 
 ul.bodylist {

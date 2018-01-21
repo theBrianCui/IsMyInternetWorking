@@ -1,6 +1,6 @@
 // Performs a GET request to /whatsmyip with a timeout of 2000 ms.
 // Returns a Promise with reply. Errors or non-200 status codes reject.
-const Promise = require("bluebird");
+//const Promise = require("bluebird");
 const xhr = require("xhr");
 
 export default () => {
