@@ -20,7 +20,7 @@ p {
 
 div#center {
   margin: 0 auto;
-  max-width: 728px;
+  max-width: $body_col_width;
 }
 
 p {

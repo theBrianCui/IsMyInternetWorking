@@ -1,13 +1,13 @@
 .infobox {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     font-family: $font_yes;
+    display: table;
+    width: 100%;
     text-align: center;
 
     .infobox-left {
-        flex-grow: 1;
+        display: table-cell;
         border-right: $line_light_grey;
+        vertical-align: middle;
         @include hr();
         div {
             min-width: $responsive_small / 2;
@@ -15,7 +15,10 @@
     }
 
     .infobox-right {
-        flex-grow: 2;
+        display: table-cell;
+        width: 100%;
+        text-align: center;
+        vertical-align: middle;
         @include hr();
         div {
             min-width: $responsive_small / 2;
