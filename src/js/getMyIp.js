@@ -5,7 +5,7 @@ const xhr = require("xhr");
 
 export default () => {
     return new Promise((resolve, reject) => {
-        xhr.get("/whatsmyip", {
+        xhr.post(`/whatsmyip?n=${Date.now()}`, {
             timeout: 2000,
             responseType: "text"
 

@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(PUBLIC, 'index.html'));
 });
 
-app.get('/whatsmyip', (req, res) => {
+app.post('/whatsmyip', (req, res) => {
     res.send(req.ip);
 });
 
