@@ -9,16 +9,35 @@ function getByClass(selector) {
     return document.getElementsByClassName(selector);
 }
 
+var test_status_nodes = document.getElementsByClassName("js-test-status");
+var test_subtitle_node = document.getElementsByClassName("js-test-subtitle")[0];
+
 // register each of the info boxes
 var infobox = {
     ip: ((tc) => { getByClass("infobox-content-ip")[0].textContent = tc }),
-    location: ((tc) => { getByClass("infobox-content-loc")[0].textContent = tc }),
+
+    location: ((location) => {
+        var location_string = "";
+        var values = [];
+        const desired_attributes = ["city", "region_name", "zip_code", "country_name"];
+
+        for (var i = 0; i < desired_attributes.length; ++i) {
+            if (location[desired_attributes[i]])
+                values.push(location[desired_attributes[i]]);
+        }
+
+        location_string = values.join(", ");
+
+        if (values.length <= 2) {
+            location_string += ` (${location["latitude"]}, ${location["longitude"]})`;
+        }
+
+        getByClass("infobox-content-loc")[0].textContent = location_string;
+    }),
+
     ping: ((tc) => { getByClass("infobox-content-ping")[0].textContent = tc + "ms" }),
     ua: ((tc) => { getByClass("infobox-content-ua")[0].textContent = tc })
 }
-
-// register each test status as clickable for testing
-var test_status_nodes = document.getElementsByClassName("js-test-status");
 
 function runTest() {
     // set color and status
@@ -28,6 +47,8 @@ function runTest() {
         test_status_nodes[i].classList.remove("green");
         test_status_nodes[i].classList.add("orange");
     }
+
+    test_subtitle_node.textContent = "Hold on, I'm checking...";
 
     // update the user agent immediately
     infobox.ua(navigator.userAgent);
@@ -53,7 +74,6 @@ function runTest() {
 
     }).then(() => {
         var test_status = test_success ? "YES!" : "NO!";
-        var test_subtitle = test_success ? "Your Internet is Working!" : "Something's Wrong!";
         var test_color = test_success ? "green" : "red";
 
         for (var i = 0; i < test_status_nodes.length; ++i) {
@@ -61,10 +81,13 @@ function runTest() {
             test_status_nodes[i].classList.remove("orange");
             test_status_nodes[i].classList.add(test_color);
         }
+
+        test_subtitle_node.textContent = test_success ? "Your Internet is Working!" : "Something's Wrong!";
     });
 }
 
 function main() {
+    // register each test status as clickable for testing
     for (var i = 0; i < test_status_nodes.length; ++i) {
         test_status_nodes[i].addEventListener("click", runTest);
     }
