@@ -9,12 +9,13 @@ function getByClass(selector) {
     return document.getElementsByClassName(selector);
 }
 
-var test_status_nodes = document.getElementsByClassName("js-test-status");
-var test_subtitle_node = document.getElementsByClassName("js-test-subtitle")[0];
+var test_status_nodes = getByClass("js-test-status");
+var test_subtitle_node = getByClass("js-test-subtitle")[0];
 
 // register each of the info boxes
 var infobox = {
     ip: ((tc) => { getByClass("infobox-content-ip")[0].textContent = tc }),
+    ping: ((tc) => { getByClass("infobox-content-ping")[0].textContent = tc + "ms" }),
 
     location: ((location) => {
         var location_string = "";
@@ -35,8 +36,17 @@ var infobox = {
         getByClass("infobox-content-loc")[0].textContent = location_string;
     }),
 
-    ping: ((tc) => { getByClass("infobox-content-ping")[0].textContent = tc + "ms" }),
-    ua: ((tc) => { getByClass("infobox-content-ua")[0].textContent = tc })
+    ua: ((tc) => {
+        var ua_node = getByClass("infobox-content-ua")[0];
+
+        if (tc.length > 80) {
+            ua_node.classList.add("infobox-content-small");
+        } else {
+            ua_node.classList.remove("infobox-content-small");
+        }
+
+        ua_node.textContent = tc;
+    })
 }
 
 function runTest() {

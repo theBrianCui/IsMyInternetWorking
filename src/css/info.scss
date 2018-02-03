@@ -28,7 +28,7 @@
         vertical-align: middle;
         padding: .75rem .75rem;
         @include hr();
-        
+
         div {
             min-width: $responsive_small / 2;
         }
@@ -36,6 +36,10 @@
         .infobox-content {
             font-size: 1.25rem;
             padding: .2rem 0;
+        }
+
+        .infobox-content-small {
+            font-size: 1.0rem;
         }
     }
 

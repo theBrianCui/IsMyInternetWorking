@@ -26,6 +26,10 @@
             <div class="infobox-title">USER AGENT</div>
             <div class="infobox-content infobox-content-ua">
                 <script>
+                    if (navigator.userAgent.length > 80) {
+                        document.getElementsByClassName("infobox-content-ua")[0]
+                            .classList.add("infobox-content-small");
+                    }
                     document.write(navigator.userAgent);
                 </script>
             </div>
