@@ -2,7 +2,7 @@ import "./hbs/index.hbs";
 import "./css/style.scss";
 
 //const Promise = require("bluebird");
-import getMyIp from "./js/getMyIp.js";
+import getMyInfo from "./js/getMyInfo.js";
 import ga from "./js/ga.js";
 
 function getByClass(selector) {
@@ -11,16 +11,16 @@ function getByClass(selector) {
 
 // register each of the info boxes
 var infobox = {
-    ip: getByClass("infobox-content-ip")[0],
-    location: getByClass("infobox-content-loc")[0],
-    ping: getByClass("infobox-content-ping")[0],
-    ua: getByClass("infobox-content-ua")[0]
-};
+    ip: ((tc) => { getByClass("infobox-content-ip")[0].textContent = tc }),
+    location: ((tc) => { getByClass("infobox-content-loc")[0].textContent = tc }),
+    ping: ((tc) => { getByClass("infobox-content-ping")[0].textContent = tc + "ms" }),
+    ua: ((tc) => { getByClass("infobox-content-ua")[0].textContent = tc })
+}
 
 // register each test status as clickable for testing
 var test_status_nodes = document.getElementsByClassName("js-test-status");
 
-function runTest(e) {
+function runTest() {
     // set color and status
     for (var i = 0; i < test_status_nodes.length; ++i) {
         test_status_nodes[i].textContent = "MAYBE";
@@ -30,22 +30,27 @@ function runTest(e) {
     }
 
     // update the user agent immediately
-    infobox.ua = navigator.userAgent;
+    infobox.ua(navigator.userAgent);
 
     // query the server
     var test_time = Date.now();
     var test_success = false;
+    var ip_address = null;
 
-    getMyIp().then((result) => {
+    var ipAddr = getMyInfo().then((result) => {
         // test successful
         test_success = true;
-        infobox.ping.textContent = `${Date.now() - test_time} ms`;
-        infobox.ip.textContent = result;
+        infobox.ping(Date.now() - test_time);
+        infobox.ip(result.ip);
+        infobox.location(result.loc);
+
     }).catch((e) => {
         // test failed
         test_success = false;
-        infobox.ping.textContent = "N/A";
-        infobox.ip.textContent = "N/A";
+        infobox.ping("N/A");
+        infobox.ip("N/A");
+        infobox.location("N/A");
+
     }).then(() => {
         var test_status = test_success ? "YES!" : "NO!";
         var test_subtitle = test_success ? "Your Internet is Working!" : "Something's Wrong!";
@@ -59,6 +64,12 @@ function runTest(e) {
     });
 }
 
-for (var i = 0; i < test_status_nodes.length; ++i) {
-    test_status_nodes[i].addEventListener("click", runTest);
+function main() {
+    for (var i = 0; i < test_status_nodes.length; ++i) {
+        test_status_nodes[i].addEventListener("click", runTest);
+    }
+
+    runTest();
 }
+
+document.onreadystatechange = main;
