@@ -4,50 +4,11 @@ import "./css/style.scss";
 //const Promise = require("bluebird");
 import getMyInfo from "./js/getMyInfo.js";
 import ga from "./js/ga.js";
-
-function getByClass(selector) {
-    return document.getElementsByClassName(selector);
-}
+import { getByClass } from "./js/domHelpers.js";
+import infobox from "./js/infobox.js";
 
 var test_status_nodes = getByClass("js-test-status");
 var test_subtitle_node = getByClass("js-test-subtitle")[0];
-
-// register each of the info boxes
-var infobox = {
-    ip: ((tc) => { getByClass("infobox-content-ip")[0].textContent = tc }),
-    ping: ((tc) => { getByClass("infobox-content-ping")[0].textContent = tc + "ms" }),
-
-    location: ((location) => {
-        var location_string = "";
-        var values = [];
-        const desired_attributes = ["city", "region_name", "zip_code", "country_name"];
-
-        for (var i = 0; i < desired_attributes.length; ++i) {
-            if (location[desired_attributes[i]])
-                values.push(location[desired_attributes[i]]);
-        }
-
-        location_string = values.join(", ");
-
-        if (values.length <= 2) {
-            location_string += ` (${location["latitude"]}, ${location["longitude"]})`;
-        }
-
-        getByClass("infobox-content-loc")[0].textContent = location_string;
-    }),
-
-    ua: ((tc) => {
-        var ua_node = getByClass("infobox-content-ua")[0];
-
-        if (tc.length > 80) {
-            ua_node.classList.add("infobox-content-small");
-        } else {
-            ua_node.classList.remove("infobox-content-small");
-        }
-
-        ua_node.textContent = tc;
-    })
-}
 
 function runTest() {
     // set color and status
@@ -105,4 +66,11 @@ function main() {
     runTest();
 }
 
-document.onreadystatechange = main;
+
+(function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+})(main);
