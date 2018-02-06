@@ -2,14 +2,20 @@
     <div class="infobox-panel infobox-ip infobox-left">
         <div>
             <div class="infobox-title">IP ADDRESS</div>
-            <div class="infobox-content infobox-content-ip">AA:BB:CC:DD:EE:FF</div>
-            <div class="infobox-subtitle">prev AA:BB:CC:DD:EE:FF</div>
+            <div class="infobox-content infobox-content-ip">N/A</div>
+            <div class="infobox-subtitle">prev 
+                <span class="infobox-content-ip-prev">
+                    <script>
+                        document.write(window.localStorage.getItem("infobox-prev-ip") || "N/A");
+                    </script>
+                </span>
+            </div>
         </div>
     </div>
     <div class="infobox-panel infobox-loc infobox-right">
         <div>
             <div class="infobox-title">ESTIMATED LOCATION</div>
-            <div class="infobox-content infobox-content-loc">Austin, Texas 78705, United States</div>
+            <div class="infobox-content infobox-content-loc">N/A</div>
         </div>
     </div>
 </div>
@@ -17,8 +23,8 @@
     <div class="infobox-panel infobox-ping infobox-left">
         <div>
             <div class="infobox-title">PING</div>
-            <div class="infobox-content infobox-content-ping">2000 ms</div>
-            <div class="infobox-subtitle">avg 4000 ms</div>
+            <div class="infobox-content infobox-content-ping">N/A</div>
+            <div class="infobox-subtitle">ip avg N/A</div>
         </div>
     </div>
     <div class="infobox-panel infobox-ua infobox-right">
