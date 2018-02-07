@@ -39,9 +39,9 @@ function runTest() {
     }).catch((e) => {
         // test failed
         test_success = false;
-        infobox.ping("N/A");
-        infobox.ip("N/A");
-        infobox.location("N/A");
+        infobox.ping(null);
+        infobox.ip(null);
+        infobox.location(null);
 
     }).then(() => {
         var test_status = test_success ? "YES!" : "NO!";

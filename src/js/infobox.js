@@ -22,15 +22,23 @@ export default {
                 return;
 
             target_nodes.ip_prev.textContent = prev_ip = current_ip || prev_ip || "N/A";
-            target_nodes.ip.textContent = current_ip = new_ip;
+            target_nodes.ip.textContent = ((current_ip = new_ip) !== null ? current_ip : "N/A");
 
             storage.set("infobox-prev-ip", current_ip);
         }
     })(),
 
-    ping: ((tc) => { target_nodes.ping.textContent = tc + "ms" }),
+    ping: ((tc) => {
+        target_nodes.ping.textContent = tc ? tc + "ms" : "N/A";
+    }),
 
     location: ((location) => {
+        if (!location) {
+            target_nodes.location.textContent = "N/A";
+            return;
+        }
+
+        // Construct a string with the desired attributes, then join with a comma
         var location_string = "";
         var values = [];
         const desired_attributes = ["city", "region_name", "zip_code", "country_name"];
@@ -43,7 +51,7 @@ export default {
         location_string = values.join(", ");
 
         if (values.length <= 2) {
-            location_string += ` (${location["latitude"]}, ${location["longitude"]})`;
+            location_string += ` (Lat: ${location["latitude"]}, Long: ${location["longitude"]})`;
         }
 
         target_nodes.location.textContent = location_string;
