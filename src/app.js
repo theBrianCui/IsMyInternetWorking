@@ -32,15 +32,15 @@ function runTest() {
     var ipAddr = getMyInfo().then((result) => {
         // test successful
         test_success = true;
-        infobox.ping(Date.now() - test_time);
         infobox.ip(result.ip);
+        infobox.ping(Date.now() - test_time);
         infobox.location(result.loc);
 
     }).catch((e) => {
         // test failed
         test_success = false;
-        infobox.ping(null);
         infobox.ip(null);
+        infobox.ping(null);
         infobox.location(null);
 
     }).then(() => {
