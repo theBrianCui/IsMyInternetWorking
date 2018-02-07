@@ -10,7 +10,11 @@ import infobox from "./js/infobox.js";
 var test_status_nodes = getByClass("js-test-status");
 var test_subtitle_node = getByClass("js-test-subtitle")[0];
 
+var test_in_progress = false;
 function runTest() {
+    if (test_in_progress) return;
+    test_in_progress = true;
+
     // set color and status
     for (var i = 0; i < test_status_nodes.length; ++i) {
         test_status_nodes[i].textContent = "MAYBE";
@@ -53,6 +57,7 @@ function runTest() {
         }
 
         test_subtitle_node.textContent = test_success ? "Your Internet is Working!" : "Something's Wrong!";
+        test_in_progress = false;
     });
 }
 
