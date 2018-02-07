@@ -10,7 +10,7 @@
     {{> menubar}}
     <div id="center">
         <div id="yesbox">
-            <div id="yestext">
+            <div id="yestext" class="grow noselect">
                 <a id="yeslink" class="js-test-status orange" title="Click here to test again!">
                     MAYBE
                 </a>
@@ -22,11 +22,11 @@
         <div class="hr" style="margin-bottom: 0"></div>
         {{> info}}
         <p class="question">
-            Why don't other sites load properly?</p>
+            Having connection problems? Start here.</p>
         <p class="answer">
-            Chances are, other sites will load too (try
+            There are several reasons for why you might have difficulty connecting to the Internet. 
+            The connection test performed by this site (click the big banner to test again!) If you're reading this pagewill load too (try
             <a href="http://google.com" target="_blank">Google</a>,
-            <a href="http://search.yahoo.com/" target="_blank">Yahoo Search</a>, or
             <a href="http://startpage.com/" target="_blank">StartPage</a>), just slower than this one due to their size, server load, and/or other factors. This site, not
             counting the share buttons, is quite small - around 25 kb - and shouldn't take more than a few seconds to load,
             unless you're on an extremely slow connection. See the next section below for information on how you can speed
@@ -57,11 +57,8 @@
                     <b>Windows</b> users: Open a command prompt window and use the command "
                     <b>ipconfig /flushdns</b>".</li>
                 <li>For
-                    <b>Mac OS X (Mountain) Lion</b> users: In a terminal window, use "
-                    <b>sudo killall -HUP mDNSResponder</b>".</li>
-                <li>For
-                    <b>Mac OSX 10.6</b> and earlier, the command "
-                    <b>sudo dscacheutil -flushcache</b>" will do the trick.</li>
+                    <b>macOS/OSX 10.10+</b> users: In a terminal window, use "
+                    <b>sudo killall -HUP mDNSResponder</b>". On older versions of OSX, try <b>sudo discoveryutil mdnsflushcache</b> or <b>sudo dscacheutil -flushcache</b></li>
                 <li>For
                     <b>Linux</b> users, your DNS is likely managed by
                     <b>nscd daemon</b>. Typically, restarting
