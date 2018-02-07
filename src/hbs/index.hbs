@@ -9,18 +9,20 @@
 <body>
     {{> menubar}}
     <div id="center">
-        <div id="yesbox">
-            <div id="yestext" class="grow noselect">
-                <a id="yeslink" class="js-test-status orange" title="Click here to test again!">
-                    MAYBE
-                </a>
+        <div class="test-info-wrapper">
+            <div id="yesbox">
+                <div id="yestext" class="grow noselect">
+                    <a id="yeslink" class="js-test-status orange" title="Click here to test again!">
+                        MAYBE
+                    </a>
+                </div>
+                <div id="yessub" class="js-test-subtitle">
+                    Just a moment, I'm checking...
+                </div>
             </div>
-            <div id="yessub" class="js-test-subtitle">
-                Just a moment, I'm checking...
-            </div>
+            <div class="hr" style="margin: 0"></div>
+            {{> info}}
         </div>
-        <div class="hr" style="margin-bottom: 0"></div>
-        {{> info}}
         <p class="question">
             Having connection problems? Start here.</p>
         <p class="answer">

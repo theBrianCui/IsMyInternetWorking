@@ -37,9 +37,8 @@ div#center {
 
 p {
   &.question {
-    font-weight: 700;
     text-align: center;
-    font-size: 105%;
+    font-size: 1.25rem;
     color: #006DD7;
   }
   &.answer {
@@ -68,6 +67,9 @@ p {
 }
 
 div {
+  &.test-info-wrapper {
+    padding-bottom: .75rem;
+  }
   &.list {
     width: 95%;
   }
@@ -75,7 +77,7 @@ div {
     text-align: center;
     font-family: $font_yes;
     padding-top: 3.5em;
-    padding-bottom: 2.6em;
+    padding-bottom: 3.1em;
   }
   &#yestext {
     a {

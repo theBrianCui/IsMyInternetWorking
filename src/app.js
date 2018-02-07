@@ -14,8 +14,7 @@ function runTest() {
     // set color and status
     for (var i = 0; i < test_status_nodes.length; ++i) {
         test_status_nodes[i].textContent = "MAYBE";
-        test_status_nodes[i].classList.remove("red");
-        test_status_nodes[i].classList.remove("green");
+        test_status_nodes[i].classList.remove("red", "green");
         test_status_nodes[i].classList.add("orange");
     }
 
@@ -49,7 +48,7 @@ function runTest() {
 
         for (var i = 0; i < test_status_nodes.length; ++i) {
             test_status_nodes[i].textContent = test_status;
-            test_status_nodes[i].classList.remove("orange");
+            test_status_nodes[i].classList.remove("red", "orange");
             test_status_nodes[i].classList.add(test_color);
         }
 
