@@ -101,10 +101,14 @@ span#status {
 
 ul.bodylist {
   font-family: Helvetica,Arial,sans-serif;
-  font-size: .84em;
+  font-size: .85rem;
   color: gray;
   text-align: justify;
   padding-left: 3em;
+  li {
+    padding-bottom: .3rem;
+  }
+
   a {
     &:link, &:visited {
       color: #295BA7;

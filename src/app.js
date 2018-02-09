@@ -8,6 +8,7 @@ import { getByClass } from "./js/domHelpers.js";
 import infobox from "./js/infobox.js";
 
 var test_status_nodes = getByClass("js-test-status");
+var test_link_nodes = getByClass("js-test-link");
 var test_subtitle_node = getByClass("js-test-subtitle")[0];
 
 var test_in_progress = false;
@@ -65,6 +66,11 @@ function main() {
     // register each test status as clickable for testing
     for (var i = 0; i < test_status_nodes.length; ++i) {
         test_status_nodes[i].addEventListener("click", runTest);
+    }
+
+    // and the links too
+    for (var i = 0; i < test_link_nodes.length; ++i) {
+        test_link_nodes[i].addEventListener("click", runTest);
     }
 
     runTest();
