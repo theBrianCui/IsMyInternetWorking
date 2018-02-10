@@ -32,7 +32,7 @@
         </p>
         <div class="list">
             <ul class="bodylist">
-                <li><a href="https://isitdownorjust.me/" target="_blank">Is it Down or Just Me?</a>: Check to see if a site is down for everyone, or if it's just you. If it's you 
+                <li><a href="https://isitdownorjust.me/" target="_blank">Is it Down or Just Me?</a>: Check to see if a site is down for everyone, or if it's just you. If it's you
                 (or that site is also inaccessible), keep on reading. Alternative: <a href="http://www.downforeveryoneorjustme.com/"
                 target="_blank" title="Down For Everyone Or Just Me?">Down for Everyone or Just Me?</a>
                 <li><a href="http://tools.pingdom.com/fpt/" target="_blank">Pingdom Website Speed Test</a>: Run a third-party speed test against another website. The website could be up, but just under high load and slow to respond. Alternative: <a href="https://gtmetrix.com/" target="_blank">GTmetrix's Speed Test.</a></li>
@@ -40,13 +40,13 @@
         </div>
         <p class="answer">
             Any visible <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"
-                target="_blank">HTTP status codes</a> such as 301 or 404 generally indicate that a website is online, but temporarily inaccessible (try a different URL?). 
+                target="_blank">HTTP status codes</a> such as 301 or 404 generally indicate that a website is online, but temporarily inaccessible (try a different URL?).
                 Should your browser fail to connect altogether, consider clearing your DNS cache, which is responsible for mapping domain names (e.g. "ismyinternetworking.com") to IP addresses.
         </p>
         <div class="list">
             <ul class="bodylist">
                 <li><b>Windows</b> users: Open a command prompt window, and run the command "<b>ipconfig /flushdns</b>".</li>
-                <li><b>macOS/OSX 10.10+</b> users: In a terminal window, use "<b>sudo killall -HUP mDNSResponder</b>". 
+                <li><b>macOS/OSX 10.10+</b> users: In a terminal window, use "<b>sudo killall -HUP mDNSResponder</b>".
                 On older versions of OSX, try "<b>sudo discoveryutil mdnsflushcache</b>" or "<b>sudo dscacheutil -flushcache</b>". These commands will require elevated (administrator) permissions.</li>
                 <li><b>Linux</b> users: your DNS is likely managed by
                     <b>nscd daemon</b>. In a terminal window, try the commands "<b>/etc/rc.d/nscd restart</b>" or "<b>/etc/init.d/nscd restart</b>".
@@ -63,9 +63,9 @@
             What can I do to make my connection faster?</p>
         <p class="answer">
             Your Internet connection's maximum bandwidth is ultimately dictated by your ISP, but if you're not reaching that limit, there are a number of strategies
-            you can employ to make your connection faster. Wireless signals can be improved by simply physically relocating closer to the access point. 
-            Better hardware can also improve signal and connection strength: an <a href="http://amzn.to/2nKnZGk" target="_blank">802.11 AC Wifi Router</a> or 
-            <a href="http://amzn.to/2sf2Ys0" target="_blank">range extender</a>, when paired with an <a href="http://amzn.to/2sih5wv" target="_blank">802.11 AC Wifi Adapter</a>, 
+            you can employ to make your connection faster. Wireless signals can be improved by simply physically relocating closer to the access point.
+            Better hardware can also improve signal and connection strength: an <a href="http://amzn.to/2nKnZGk" target="_blank">802.11 AC Wifi Router</a> or
+            <a href="http://amzn.to/2sf2Ys0" target="_blank">range extender</a>, when paired with an <a href="http://amzn.to/2sih5wv" target="_blank">802.11 AC Wifi Adapter</a>,
             can offer significant improvements in range and bandwidth over older generations of Wifi. For immediate improvements,
         </p>
         <div class="list">
@@ -84,8 +84,8 @@
         <div class="list">
             <ul class="bodylist">
                 <li>Unplug and plug back in your WiFi adapter (if external) or Ethernet cable.</li>
-                <li>Update your Wifi card or Ethernet port drivers. These should be available on your computer's manufacturer's website 
-                    (e.g. <a href="https://www.asus.com/support/" target="_blank">ASUS Support</a>, <a href="https://www.netgear.com/support/download/" target="_blank">Netgear Download Center</a>, 
+                <li>Update your Wifi card or Ethernet port drivers. These should be available on your computer's manufacturer's website
+                    (e.g. <a href="https://www.asus.com/support/" target="_blank">ASUS Support</a>, <a href="https://www.netgear.com/support/download/" target="_blank">Netgear Download Center</a>,
                     <a href="http://www.tp-link.com/us/support/download-center" target="_blank">TP-Link Download Center</a>).</li>
                 <li>Check to see if you have not exceeded your data usage cap, if you have one. Some ISPs will still allow you
                     to access the internet after exceeding data usage limits, with a severe speed penalty.</li>
@@ -101,43 +101,36 @@
             What if nothing loads at all?</p>
         <p class="answer">
             Any one of the components that bridge your computer to the internet could be broken, so you'll may have to diagnose each one
-            individually. For most (home) internet setups, the "internet
-            bridge" looks something like this:
-            <i>Web Browser
-                <-> OS/Network Adapter
-                    <-> Router
-                        <-> Modem
-                            <-> ISP
-                                <-> the rest of the internet.</i> Listed below are some potential fixes that can be done without
-            leaving your chair (make sure to attempted all the steps in the previous sections as well!).
+            individually. If your hardware configuration hasn't changed recently, it could very well be a software issue. Listed below are some potential fixes
+            for temporary software problems that can get you back on track.
         </p>
         <div class="list">
             <ul class="bodylist">
                 <li>Try a
                     <a href="http://portableapps.com/apps/internet/google_chrome_portable" target="_blank">different web browser</a>, preferably one
                     <a href="http://portableapps.com/apps/internet/firefox_portable"
-                        target="_blank">without addons/extensions.</a>
+                        target="_blank">without addons/extensions</a> installed.
+                </li>
+                <li>Windows only: Right-click on the connection icon in the taskbar tray and select "Troubleshoot Problems" to
+                    see if Windows can solve the issue for you.</li>
+                <li>Restart your computer. No, really! On both wireless and wired connections, this will force your router to re-assign
+                    dynamic IP address to your computer.
                 </li>
                 <li>Connect to a different wireless hotspot, such as one created by your smartphone through tethering. Failure
                     to connect to any other hotspot indicates an issue with the adapter.</li>
-                <li>Windows only: Right-click on the connection icon in the taskbar tray and select "Troubleshoot Problems" to
-                    see if Windows can solve the issue for you.</li>
-                <li>Restart your computer. This tends to fix a lot of problems!</li>
             </ul>
         </div>
         <p class="answer">
-            If none of the previous fixes work, your connection problems are likely not a result of your computer. The actions below
-            go over the other components that could be causing issues.
+            If none of the previous fixes work, it's time to start investigating hardware problems. The actions below
+            go over the hardware components that could be preventing you from connecting to the Internet.
         </p>
         <div class="list">
             <ul class="bodylist">
                 <li>Examine the lights on your router or modem. Green = good, red = bad, and flashing indicates activity. The
                     manual for your router or modem will have more information regarding what status the lights indicate.
-                    <li>Check to see if the cables that link your router, modem, and the wall are secure.</li>
-                    <li>Restart your router manually by unplugging it and plugging it back in after 30 seconds. Sometimes routers
+                    <li>Check to see if the cables, including power, that link your router, modem, and the wall are secure. Unplug and re-plug them.</li>
+                    <li>Restart your router or modem manually by unplugging it from power and plugging it back in after 30 seconds. Sometimes routers
                         just need a fresh reboot to get things going again.</li>
-                    <li>Unplug your router, and restart your modem by unplugging it and plugging it back in after 30 seconds.
-                        Then, plug your router back in. Sometimes your modem needs a reboot too.</li>
             </ul>
         </div>
         <p class="question">
@@ -250,55 +243,37 @@
         <p class="answer">
             Try to access your router's control panel via your browser (192.168.*.*) on a wired connection. In the table above, you can
             find control panel IP addresses for common router manufacturers under the "IP Address" column. Alternatively,
-            you can find it in your router's manual, or for Windows users, by opening a command prompt window, and then using
-            the command "ipconfig" - your router's IP will be on the right of "Default Gateway...". Punch the IP address
-            into the address bar of your browser, press enter, and the control panel page should appear within a few seconds.
+            you can find it in your router's manual. Type the IP address into the address bar of your browser, press enter, and the control panel page should appear.
+            If the IP address of your router is not listed above or doesn't work, try the following:
         </p>
         <div class="list">
             <ul class="bodylist">
-                <li>When prompted for a username and password, try a combination of (blank), "root", and "admin". Default usernames
-                    and passwords for common router manufacturers can be found in the above reference table. The alternative
-                    username/password combination is used less often.
-                    <li>If you cannot find a username and password combination that works, you may need to reset your router
-                        to factory settings. See the next section for details.</li>
-                    <li>The control panel will never load if you've used the wrong IP address. Refer back to your router's manual
-                        if you get a loading icon for longer than ten seconds.</li>
+                <li><b>Windows</b> users: Open a command prompt window, and run the command "<b>ipconfig</b>". Look for the "Default Gateway" line.</li>
+                <li><b>Linux/macOS</b> users: In a terminal window, run "<b>route -n</b>". Look for an IP address under the "Gateway" column.</li>
             </ul>
         </div>
         <p class="answer">
-            If the control panel says something similar to "Searching for Server" or "First-time Setup", then your ISP is having issues
-            -
-            <a href="http://gethuman.com/" target="_blank">give them a call.</a>
+            When prompted for a username and password, try a combination of (blank), "root", and "admin". Default usernames
+            and passwords for common router manufacturers can be found in the above reference table. The alternative
+            username/password combination is used less often.
+        </p>
+        <p class="answer">
+            If the control panel says something similar to "Searching for Server" or "First-time Setup", then your ISP is having issues.
+            Consider <a href="http://gethuman.com/" target="_blank">giving them a call</a> to see if they are aware of connectivity problems on their end.
             A support number can be located on your latest internet bill. Otherwise, if the control panel page never loads (with no login
-            prompt), and you're absolutely certain about the address, consider trying another router that works. This is
-            rather time consuming, but also the most certain method of specifically determining whether or not your router
-            has issues.
-            <br>
-            <br> Online, or at your local electronics store, you can find
-            <a href="http://www.amazon.com/gp/product/B001FWYGJS/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B001FWYGJS&linkCode=as2&tag=imiw2-20&linkId=AECBXXWZA4H6IBMY"
-                target="_blank">relatively</a>
-            <a href="http://www.amazon.com/gp/product/B008IFXQIW/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B008IFXQIW&linkCode=as2&tag=imiw2-20&linkId=3EBYX5SY3D3EB6DS"
-                target="_blank">cheap</a>
-            <a href="http://www.amazon.com/gp/product/B001UI4RTG/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B001UI4RTG&linkCode=as2&tag=imiw2-20&linkId=2L3OYIDTHCIBA6CS"
-                target="_blank">options.</a>
-            Don't worry about features, speed, and range (as you should be using a wired connection at this point), it simply has to
-            work. If that router fails to connect as well, the issue is likely due to your modem or ISP and your router(s)
-            are perfectly fine. If the new one connects, your
-            <a class="easteregg" href="old.html">old</a> (used) router is having problems, you can stick with your newly purchased one (or return it for a
-            <a
-                href="http://www.amazon.com/gp/product/B0087NZ31S/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B0087NZ31S&linkCode=as2&tag=imiw2-20&linkId=EXRT7M5EV3UWUBZG"
-                target="_blank">higher-end router</a>).
-                <br>
-                <br>Alternatively, you can try to fix the older one with a hard reset - this will put your router back to factory
-                settings, just like when you first took it out of the box.
-                <font color="red">
-                    <b>Warning:</b>
-                </font> your old router settings will be unrecoverable after a reset! Attempt one more reboot before trying this,
-                and make sure you are trying to access the control panel with the correct IP and through a wired connection!
-                First, find the reset button on your router, which may be located underneath or in the back and will likely
-                require a pin to push in. You have two options (taken from the
-                <a href="http://www.dd-wrt.com/wiki/index.php/Reset_And_Reboot"
-                    target="_blank">DD-WRT Wiki</a>), have a stopwatch ready:
+            prompt), and you're absolutely certain about the address, consider trying another router. This is
+            rather time consuming, but can determine if your router is at fault or your ISP is at fault.
+        <p class="answer">Online, or at your local electronics store, you can find fully capable routers ranging anywhere from <a href="http://amzn.to/2smzdpc" target="_blank">cheap</a> to <a href="http://amzn.to/2CbqnKD" target="_blank">expensive.</a>
+            If a brand new router fails to connect as well, the issue is likely due to your ISP and your router(s) are perfectly fine. If the new one connects, your
+            old router is having problems, you can stick with your newly purchased one (or return it for a
+            <a href="http://amzn.to/2G5nYU5"
+                target="_blank">higher-end router</a>).</p>
+        <p class="answer">Alternatively, as a last resort, you can try to fix your existing router one with a hard reset that restores it to factory settings.
+            Warning: This operation is <span style="font-weight: bold; color: red;">irrevocable</span> and your old router settings will be permanently deleted, so we recommend
+            one more series of reboots before attempting a reset. Begin by locating the reset button on your router, which may be underneath or in the back, and will likely
+            require a paperclip to push in. You have two options (taken from the
+            <a href="http://www.dd-wrt.com/wiki/index.php/Reset_And_Reboot"
+                target="_blank">DD-WRT Wiki</a>), have a stopwatch ready:
         </p>
         <div class="list">
             <ul class="bodylist">
@@ -309,7 +284,7 @@
             </ul>
         </div>
         <p class="answer">
-            Performing a hard reset will require you to set up your router again. Refer to your router's manual for details.
+            Performing a hard reset will require you to set up your router again. Refer to your router's manual and call your ISP for details.
         </p>
         <p class="question">
             What should I do if issues persist? (My internet only works sometimes)</p>
