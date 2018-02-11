@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/theBrianCui/IsMyInternetWorking#readme",
   "dependencies": {
+    "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
