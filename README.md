@@ -3,7 +3,7 @@
 Create a `.env` file in the base directory with the following:
 
 ```
-ENV=prod|dev
+NODE_ENV=production|dev
 ```
 
 Install dependencies:

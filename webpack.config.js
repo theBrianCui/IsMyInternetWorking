@@ -16,7 +16,7 @@ let plugins = [new HtmlWebpackPlugin({
 })
 ];
 
-if (process.env.ENV === "prod") {
+if (process.env.NODE_ENV === "production") {
     plugins.append(new ClosureCompilerPlugin({
         compiler: {
             language_in: 'ECMASCRIPT6',
