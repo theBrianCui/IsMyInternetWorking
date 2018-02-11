@@ -1,4 +1,7 @@
 @media (max-width: 641px) {
+  .sc-text {
+    display: none;
+  }
   div {
     &#yestext {
       font-size: 0.8em;
@@ -66,7 +69,7 @@
 }
 
 @media (max-width: 481px) {
-  .sc-text {
+  .responsive-small-hidden {
     display: none;
   }
   div {
