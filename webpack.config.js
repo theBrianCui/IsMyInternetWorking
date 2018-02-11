@@ -5,6 +5,7 @@ const ClosureCompilerPlugin = require('webpack-closure-compiler');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 require('dotenv').config();
 
+const PROD_ENV = process.env.NODE_ENV === "production";
 const PATHS = {
     src: path.join(__dirname, "src"),
     build: path.join(__dirname, "build")
@@ -12,7 +13,7 @@ const PATHS = {
 
 let css_rules = {
     test: /\.s?css$/,
-    use: process.env.NODE_ENV === "production" ? ExtractTextPlugin.extract({
+    use: PROD_ENV ? ExtractTextPlugin.extract({
         fallback: 'style-loader',
         use: ['css-loader', 'sass-loader']
     }) : ["style-loader", "css-loader", "sass-loader"]
@@ -21,11 +22,19 @@ let css_rules = {
 let plugins = [new HtmlWebpackPlugin({
         title: "Webpack demo",
         template: path.join(PATHS.src, "hbs", "index.hbs"),
-        filename: path.join(PATHS.build, "public", "index.html")
+        filename: path.join(PATHS.build, "public", "index.html"),
+        minify: PROD_ENV ? {
+            removeAttributeQuotes: true,
+            collapseWhitespace: true,
+            html5: true,
+            minifyCSS: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+        } : false,
     })
 ];
 
-if (process.env.NODE_ENV === "production") {
+if (PROD_ENV) {
     plugins.push(new ClosureCompilerPlugin({
         compiler: {
             language_in: 'ECMASCRIPT6',

@@ -7,6 +7,16 @@ import getLocation from "./js/getLocation.js";
 
 const PUBLIC = path.resolve(__dirname, "public");
 
+/*
+we can exclude a route from compression using the filter attribute
+this only saves about 20 bytes, so probably not worth it
+{
+    // exclude the /whatsmyinfo route from compression
+    filter: (req, res) => {
+        return req.path !== "/whatsmyinfo";
+    }
+}
+*/
 if (process.env.NODE_ENV === "production") {
     app.use(compression())
 }
