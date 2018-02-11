@@ -80,6 +80,31 @@
       padding-bottom: 2.25rem;
     }
   }
+  .infobox {
+    display: unset;
+    .infobox-panel {
+      display: unset;
+      > div {
+        padding: .5rem;
+        border-bottom: .1rem solid $color_light_grey;
+      }
+    }
+    .infobox-left {
+      border-right: none;
+      .infobox-content {
+        font-size: 1.1rem;
+      }
+    }
+    .infobox-right {
+      .infobox-content { 
+        font-size: 1.1rem;
+      }
+      .infobox-content-ua {
+        font-size: .8rem;
+      }
+    }
+
+  }
   p.question {
     font-size: 100%;
   }
