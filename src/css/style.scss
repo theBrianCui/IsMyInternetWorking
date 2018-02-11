@@ -3,7 +3,6 @@
 @import 'share';
 @import 'info';
 @import 'menubar';
-@import 'responsive';
 
 body {
   margin: 0;
@@ -170,26 +169,4 @@ p.copyright {
   }
 }
 
-@media (max-width: 641px) {
-  div {
-    &#yestext {
-      font-size: 0.8em;
-    }
-    &#yessub {
-      font-size: 1.5em;
-    }
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-family: Helvetica,Arial,sans-serif;
-    font-size: 70%;
-    margin: 0 auto;
-  }
-  th, td {
-    padding: 1px 4px;
-    text-align: left;
-    border: 1px solid #ccc;
-    text-align: center;
-  }
-}
+@import 'responsive';
