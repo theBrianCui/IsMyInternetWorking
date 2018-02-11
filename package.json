@@ -35,6 +35,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
+    "webpack-closure-compiler": "^2.1.6",
     "webpack-node-externals": "^1.6.0",
     "xhr": "^2.4.1"
   }

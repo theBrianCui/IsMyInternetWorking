@@ -1,12 +1,31 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require('webpack-node-externals');
+const ClosureCompilerPlugin = require('webpack-closure-compiler');
 require('dotenv').config();
 
 const PATHS = {
-  src: path.join(__dirname, "src"),
-  build: path.join(__dirname, "build")
+    src: path.join(__dirname, "src"),
+    build: path.join(__dirname, "build")
 };
+
+let plugins = [new HtmlWebpackPlugin({
+    title: "Webpack demo",
+    template: path.join(PATHS.src, "hbs", "index.hbs"),
+    filename: path.join(PATHS.build, "public", "index.html")
+})
+];
+
+if (process.env.ENV === "prod") {
+    plugins.append(new ClosureCompilerPlugin({
+        compiler: {
+            language_in: 'ECMASCRIPT6',
+            language_out: 'ECMASCRIPT5_STRICT',
+            compilation_level: 'SIMPLE'
+        },
+        jsCompiler: true,
+    }));
+}
 
 module.exports = [
     {
@@ -14,7 +33,7 @@ module.exports = [
         target: "web",
         resolve: {
             alias: {
-            "request$": "xhr"
+                "request$": "xhr"
             },
         },
         entry: path.join(PATHS.src, "app.js"),
@@ -34,13 +53,7 @@ module.exports = [
             path: path.join(PATHS.build, "public", "static"),
             filename: "app.js",
         },
-        plugins: [
-            new HtmlWebpackPlugin({
-                title: "Webpack demo",
-                template: path.join(PATHS.src, "hbs", "index.hbs"),
-                filename: path.join(PATHS.build, "public", "index.html")
-            }),
-        ],
+        plugins: plugins,
     },
     {
         name: "server",
