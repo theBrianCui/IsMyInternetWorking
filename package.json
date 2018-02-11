@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/theBrianCui/IsMyInternetWorking#readme",
   "dependencies": {
+    "compression": "^1.7.1",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "request": "^2.83.0",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "bluebird": "^3.5.1",
     "css-loader": "^0.28.8",
+    "extract-text-webpack-plugin": "^3.0.2",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.6.0",
     "html-webpack-plugin": "^2.30.1",

@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require('webpack-node-externals');
 const ClosureCompilerPlugin = require('webpack-closure-compiler');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 require('dotenv').config();
 
 const PATHS = {
@@ -9,15 +10,23 @@ const PATHS = {
     build: path.join(__dirname, "build")
 };
 
+let css_rules = {
+    test: /\.s?css$/,
+    use: process.env.NODE_ENV === "production" ? ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'sass-loader']
+    }) : ["style-loader", "css-loader", "sass-loader"]
+};
+
 let plugins = [new HtmlWebpackPlugin({
-    title: "Webpack demo",
-    template: path.join(PATHS.src, "hbs", "index.hbs"),
-    filename: path.join(PATHS.build, "public", "index.html")
-})
+        title: "Webpack demo",
+        template: path.join(PATHS.src, "hbs", "index.hbs"),
+        filename: path.join(PATHS.build, "public", "index.html")
+    })
 ];
 
 if (process.env.NODE_ENV === "production") {
-    plugins.append(new ClosureCompilerPlugin({
+    plugins.push(new ClosureCompilerPlugin({
         compiler: {
             language_in: 'ECMASCRIPT6',
             language_out: 'ECMASCRIPT5_STRICT',
@@ -25,6 +34,7 @@ if (process.env.NODE_ENV === "production") {
         },
         jsCompiler: true,
     }));
+    plugins.push(new ExtractTextPlugin('style.css'));
 }
 
 module.exports = [
@@ -39,10 +49,7 @@ module.exports = [
         entry: path.join(PATHS.src, "app.js"),
         module: {
             rules: [
-                {
-                    test: /\.s?css$/,
-                    use: ["style-loader", "css-loader", "sass-loader"]
-                },
+                css_rules,
                 {
                     test: /\.hbs$/,
                     use: "handlebars-loader",

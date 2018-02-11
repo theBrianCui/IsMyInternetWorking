@@ -1,10 +1,15 @@
 const path = require("path");
 const express = require("express");
 const app = express();
+const compression = require("compression");
 require('dotenv').config();
 import getLocation from "./js/getLocation.js";
 
 const PUBLIC = path.resolve(__dirname, "public");
+
+if (process.env.NODE_ENV === "production") {
+    app.use(compression())
+}
 
 app.use('/static', express.static(path.join(PUBLIC, 'static')));
 
