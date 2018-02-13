@@ -57,7 +57,7 @@ switch (process.env.NODE_ENV) {
 
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
     require('greenlock-express').create({
-        server: 'staging',
+        server: process.env.NODE_ENV === "production" ? 'https://acme-v01.api.letsencrypt.org/directory' : 'staging',
         email: 'webmaster@ismyinternetworking.com',
         agreeTos: true,
         approveDomains: ['ismyinternetworking.com'],
