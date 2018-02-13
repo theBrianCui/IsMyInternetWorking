@@ -1,3 +1,4 @@
+'use strict';
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -17,7 +18,7 @@ this only saves about 20 bytes, so probably not worth it
     }
 }
 */
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
     app.use(compression())
 }
 
@@ -42,4 +43,26 @@ app.post('/whatsmyinfo', (req, res) => {
     });
 });
 
-app.listen(8000, () => console.log('IMIW3 Express app listening on port 8000!'));
+var ports = [];
+switch (process.env.NODE_ENV) {
+    case "production":
+        ports = [80, 443];
+        break;
+    case "staging":
+        ports = [8000, 8001];
+        break;
+    default:
+        ports = [8000];
+}
+
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
+    require('greenlock-express').create({
+        server: 'staging',
+        email: 'webmaster@ismyinternetworking.com',
+        agreeTos: true,
+        approveDomains: ['ismyinternetworking.com'],
+        app: app,
+    }).listen(...ports);
+} else {
+    app.listen(...ports, () => console.log('IMIW3 Express app listening on port 8000!'));
+}

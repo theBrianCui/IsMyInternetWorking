@@ -5,7 +5,7 @@ const ClosureCompilerPlugin = require('webpack-closure-compiler');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 require('dotenv').config();
 
-const PROD_ENV = process.env.NODE_ENV === "production";
+const PROD_ENV = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging";
 const PATHS = {
     src: path.join(__dirname, "src"),
     build: path.join(__dirname, "build")
