@@ -46,8 +46,6 @@ app.post('/whatsmyinfo', (req, res) => {
 var ports = [];
 switch (process.env.NODE_ENV) {
     case "production":
-        ports = [80, 443];
-        break;
     case "staging":
         ports = [8000, 8001];
         break;
