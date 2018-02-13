@@ -18,7 +18,8 @@ this only saves about 20 bytes, so probably not worth it
 }
 */
 if (process.env.NODE_ENV === "production") {
-    app.use(compression())
+    app.use(compression());
+    app.set('trust proxy', true);
 }
 
 app.use('/static', express.static(path.join(PUBLIC, 'static')));
