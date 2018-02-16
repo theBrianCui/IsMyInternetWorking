@@ -93,8 +93,12 @@ function main() {
     });
 
     runTest();
+    console.log(`Your Console Works! Build Type: ${process.env.NODE_ENV} : ${WEBPACK_BUILD_DATE}`);
+    console.log(`For contributions, please submit pull requests and animated gifs to ${WEBPACK_GIT_REPO} . Thank you!`);
+    if (process.env.NODE_ENV === 'production') {
+        ga();
+    }
 }
-
 
 (function ready(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {

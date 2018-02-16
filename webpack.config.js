@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require('webpack-node-externals');
 const ClosureCompilerPlugin = require('webpack-closure-compiler');
@@ -31,6 +32,11 @@ let plugins = [new HtmlWebpackPlugin({
             removeComments: true,
             removeEmptyAttributes: true,
         } : false,
+    }),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(`${process.env.NODE_ENV}`),
+        'WEBPACK_BUILD_DATE': JSON.stringify(new Date().toLocaleString()),
+        'WEBPACK_GIT_REPO': JSON.stringify('https://github.com/theBrianCui/IsMyInternetWorking')
     })
 ];
 
