@@ -1,3 +1,7 @@
+# Is My Internet Working?
+
+Official source code for the website [Is My Internet Working?](https://ismyinternetworking.com/). Now powered by Node.js. 
+
 ## First Time Setup
 
 Create a `.env` file in the base directory with the following:
