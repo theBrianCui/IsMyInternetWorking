@@ -30,6 +30,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(PUBLIC, 'index.html'));
 });
 
+app.get('/blank.gif', (req, res) => {
+    res.sendFile(path.join(PUBLIC, 'static/img/blank.gif'));
+});
+
 app.post('/whatsmyinfo', (req, res) => {
     let payload = {
         ip: req.ip,
