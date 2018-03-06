@@ -1,6 +1,8 @@
 # Is My Internet Working?
 
-Official source code for the website [Is My Internet Working?](https://ismyinternetworking.com/). Now powered by Node.js. 
+Official source code for the website [Is My Internet Working?](https://ismyinternetworking.com/). Now powered by Node.js.
+
+**Looking for an offline version?** [Download a standalone version of IMIW](https://github.com/theBrianCui/IsMyInternetWorking/files/1786104/index.zip) that you can open locally and use offline.
 
 ## First Time Setup
 
