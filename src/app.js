@@ -66,6 +66,7 @@ function runTest() {
 
         test_subtitle_node.textContent = test_success ? "Your Internet is Working!" : "Something's Wrong!";
         test_in_progress = false;
+        document.title = `${PAGE_BASE_TITLE} ${test_status}`;
 
         clearTimeout(auto_test.timeout);
         if (auto_test.rate > 0) auto_test.timeout = setTimeout(runTest, auto_test.rate * 1000);

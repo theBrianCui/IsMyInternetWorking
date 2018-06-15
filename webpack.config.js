@@ -36,7 +36,8 @@ let plugins = [new HtmlWebpackPlugin({
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(`${process.env.NODE_ENV}`),
         'WEBPACK_BUILD_DATE': JSON.stringify(new Date().toLocaleString()),
-        'WEBPACK_GIT_REPO': JSON.stringify('https://github.com/theBrianCui/IsMyInternetWorking')
+        'WEBPACK_GIT_REPO': JSON.stringify('https://github.com/theBrianCui/IsMyInternetWorking'),
+        'PAGE_BASE_TITLE': JSON.stringify('Is My Internet Working?'),
     })
 ];
 

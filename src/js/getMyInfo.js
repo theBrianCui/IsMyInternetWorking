@@ -6,7 +6,7 @@ const xhr = require("xhr");
 export default () => {
     return new Promise((resolve, reject) => {
         xhr.post(`/whatsmyinfo?n=${Date.now()}`, {
-            timeout: 2000,
+            timeout: 3500,
             responseType: "json"
 
         }, (error, response, body) => {
