@@ -4,9 +4,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require('webpack-node-externals');
 const ClosureCompilerPlugin = require('webpack-closure-compiler');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 require('dotenv').config();
 
 const PROD_ENV = process.env.NODE_ENV === "production";
+const INLINE = process.env.NODE_INLINE === "true";
 const PATHS = {
     src: path.join(__dirname, "src"),
     build: path.join(__dirname, "build")
@@ -14,7 +16,7 @@ const PATHS = {
 
 let css_rules = {
     test: /\.s?css$/,
-    use: PROD_ENV ? ExtractTextPlugin.extract({
+    use: (PROD_ENV && !INLINE) ? ExtractTextPlugin.extract({
         fallback: 'style-loader',
         use: ['css-loader', 'sass-loader']
     }) : ["style-loader", "css-loader", "sass-loader"]
@@ -35,6 +37,7 @@ let plugins = [new HtmlWebpackPlugin({
     }),
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(`${process.env.NODE_ENV}`),
+        'process.env.NODE_INLINE': JSON.stringify(`${process.env.NODE_INLINE}`),
         'WEBPACK_BUILD_DATE': JSON.stringify(new Date().toLocaleString()),
         'WEBPACK_GIT_REPO': JSON.stringify('https://github.com/theBrianCui/IsMyInternetWorking'),
         'PAGE_BASE_TITLE': JSON.stringify('Is My Internet Working?'),
@@ -52,6 +55,12 @@ if (PROD_ENV) {
     }));
     plugins.push(new ExtractTextPlugin('style.css'));
 }
+
+if (INLINE) {
+    plugins.push(new ScriptExtHtmlWebpackPlugin({
+        inline: "static/app.js",
+    }));
+};
 
 module.exports = [
     {
@@ -74,6 +83,7 @@ module.exports = [
         },
         output: {
             path: path.join(PATHS.build, "public", "static"),
+            publicPath: "/static/",
             filename: "app.js",
         },
         plugins: plugins,

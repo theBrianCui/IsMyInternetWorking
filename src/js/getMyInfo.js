@@ -5,7 +5,15 @@ const xhr = require("xhr");
 
 export default () => {
     return new Promise((resolve, reject) => {
-        xhr.post(`/whatsmyinfo?n=${Date.now()}`, {
+        var url = `/whatsmyinfo?n=${Date.now()}`;
+
+        // if compiled inline, offer a full path URL for usage offline
+        // fall back to the old school method of pinging
+        if (process.env.NODE_INLINE === "true") {
+            url = "https://ismyinternetworking.com" + url;
+        }
+
+        xhr.post(url, {
             timeout: 3500,
             responseType: "json"
 
