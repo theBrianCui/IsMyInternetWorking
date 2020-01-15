@@ -66,7 +66,6 @@ function runTest() {
 
         test_subtitle_node.textContent = test_success ? "Your Internet is Working!" : "Something's Wrong!";
         test_in_progress = false;
-        
         document.title = `${test_status} ${test_subtitle_node.textContent}`;
 
         clearTimeout(auto_test.timeout);
